@@ -5,7 +5,7 @@
 #' 
 #' @param type The type of view. Set to modal for modals and home for Home tabs. Used for Modals and Home Tabs.
 #' @param title The title that appears in the top-left of the modal. Must be a plain_text text element with a max length of 24 characters. Used for Modals.
-#' @param blocks An array of blocks that defines the content of the view. Max of 100 blocks. Used for Modals and Home tabs.
+#' @param blocks A list of blocks that defines the content of the view. Max of 100 blocks. Used for Modals and Home tabs.
 #' @param close An optional \code{\link{text_object}} that defines the text displayed in the close button at the bottom-right of the view. Max length of 24 characters. Used for Modals.
 #' @param submit An optional \code{\link{text_object}} that defines the text displayed in the submit button at the bottom-right of the view. submit is required when an input block is within the blocks array. Max length of 24 characters. Used for Modals.
 #' @param private_metadata An optional string that will be sent to your app in view_submission and block_actions events. Max length of 3000 characters. Used for Modals Home tabs.
@@ -39,13 +39,13 @@ view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @export
 views_open <- function(token, trigger_id, view){
+
+  assertthat::assert_that('slack.view.object' %in% class(view))
+  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) 'slack.block.element' %in% class(x)))), msg = 'blocks must be of class slack.block.element')
   
-  assertthat::assert_that('slack.view.object' %in% class(view),
-                          all('slack.block.object' %in% class(view$blocks)))
-  
-  body <- as.list(environment()) %>% purrr::discard('token')
-  return(body)
-  response <- httr::POST('https://slack.com/api/views.open', body = jsonlite::fromJSON(view, simplifyVector = F, simplifyDataFrame = F, simplifyMatrix = F, flatten = F), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap())
+ 
+  response <- httr::POST('https://slack.com/api/views.open', body = body, encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   
   body <- httr::content(response)
   

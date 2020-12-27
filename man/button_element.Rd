@@ -5,18 +5,16 @@
 \title{Create a Button Element}
 \usage{
 button_element(
-  type = "button",
   text,
   action_id = NULL,
   url = NULL,
   value = NULL,
   style = NULL,
-  confirm = NULL
+  confirm = NULL,
+  type = "button"
 )
 }
 \arguments{
-\item{type}{The type of element. In this case type is always button.}
-
 \item{text}{A \code{\link{text_object}} that defines the button's text. Can only be of type: plain_text. Maximum length for the text in this field is 75 characters.}
 
 \item{action_id}{An identifier for this action. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.}
@@ -28,6 +26,8 @@ button_element(
 \item{style}{Decorates buttons with alternative visual color schemes. Use this option with restraint.primary gives buttons a green outline and text, ideal for affirmation or confirmation actions. primary should only be used for one button within a set. danger gives buttons a red outline and text, and should be used when the action is destructive. Use danger even more sparingly than primary. If you don't include this field, the default button style will be used.}
 
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog after the button is clicked.}
+
+\item{type}{The type of element. In this case type is always button.}
 }
 \value{
 A button element

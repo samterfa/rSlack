@@ -22,7 +22,7 @@ view_object(
 
 \item{title}{The title that appears in the top-left of the modal. Must be a plain_text text element with a max length of 24 characters. Used for Modals.}
 
-\item{blocks}{An array of blocks that defines the content of the view. Max of 100 blocks. Used for Modals and Home tabs.}
+\item{blocks}{A list of blocks that defines the content of the view. Max of 100 blocks. Used for Modals and Home tabs.}
 
 \item{close}{An optional \code{\link{text_object}} that defines the text displayed in the close button at the bottom-right of the view. Max length of 24 characters. Used for Modals.}
 

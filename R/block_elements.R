@@ -13,10 +13,10 @@
 #' @return A button element
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#button}
 #' @export
-button_element <- function(type = 'button', text, action_id = NULL, url = NULL, value = NULL, style = NULL, confirm = NULL){
+button_element <- function(text, action_id = NULL, url = NULL, value = NULL, style = NULL, confirm = NULL, type = 'button'){
   
   assertthat::assert_that(type == 'button', 
-                          all('slack.text.object' %in% class(text)))
+                          'slack.text.object' %in% class(text))
   
   obj <- as.list(environment())
   class(obj) <- append(class(obj), 'slack.block.element')
