@@ -6,8 +6,8 @@
 #' @param type The type of view. Set to modal for modals and home for Home tabs. Used for Modals and Home Tabs.
 #' @param title The title that appears in the top-left of the modal. Must be a plain_text text element with a max length of 24 characters. Used for Modals.
 #' @param blocks An array of blocks that defines the content of the view. Max of 100 blocks. Used for Modals and Home tabs.
-#' @param close An optional \code{\link{text.object}} that defines the text displayed in the close button at the bottom-right of the view. Max length of 24 characters. Used for Modals.
-#' @param submit An optional \code{\link{text.object}} that defines the text displayed in the submit button at the bottom-right of the view. submit is required when an input block is within the blocks array. Max length of 24 characters. Used for Modals.
+#' @param close An optional \code{\link{text_object}} that defines the text displayed in the close button at the bottom-right of the view. Max length of 24 characters. Used for Modals.
+#' @param submit An optional \code{\link{text_object}} that defines the text displayed in the submit button at the bottom-right of the view. submit is required when an input block is within the blocks array. Max length of 24 characters. Used for Modals.
 #' @param private_metadata An optional string that will be sent to your app in view_submission and block_actions events. Max length of 3000 characters. Used for Modals Home tabs.
 #' @param callback_id An identifier to recognize interactions and submissions of this particular view. Don't use this to store sensitive information (use private_metadata instead). Max length of 255 characters. Used for Modals Home tabs.
 #' @param clear_on_close When set to true, clicking on the close button will clear all views in a modal and close it. Defaults to false. Used for Modals.
@@ -16,7 +16,7 @@
 #' @return A View Object
 #' @seealso \url{https://api.slack.com/reference/surfaces/views}
 #' @export
-view.object <- function(type = c('modal', 'home')[[1]], title, blocks, close = NULL, submit = NULL, private_metadata = NULL, callback_id = NULL, clear_on_close = NULL, notify_on_close = NULL, external_id = NULL){
+view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = NULL, submit = NULL, private_metadata = NULL, callback_id = NULL, clear_on_close = NULL, notify_on_close = NULL, external_id = NULL){
   
   assertthat::assert_that(type %in% c('modal', 'home'), 
                           'slack.text.object' %in% class(title))
@@ -34,16 +34,17 @@ view.object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
 #' 
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
-#' @param view A \code{\link{view.object}}. See \url{https://api.slack.com/reference/surfaces/views} for more details.
-#' @return A \code{\link{view.object}} with status or an error message.
+#' @param view A \code{\link{view_object}}. See \url{https://api.slack.com/reference/surfaces/views} for more details.
+#' @return A \code{\link{view_object}} with status or an error message.
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @export
-views.open <- function(token, trigger_id, view){
+views_open <- function(token, trigger_id, view){
   
-  assertthat::assert_that('slack.view.object' %in% class(view))
+  assertthat::assert_that('slack.view.object' %in% class(view),
+                          all('slack.block.object' %in% class(view$blocks)))
   
-  body <- as.list(environment()) %>% discard('token')
-  
+  body <- as.list(environment()) %>% purrr::discard('token')
+  return(body)
   response <- httr::POST('https://slack.com/api/views.open', body = jsonlite::fromJSON(view, simplifyVector = F, simplifyDataFrame = F, simplifyMatrix = F, flatten = F), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   
   body <- httr::content(response)
