@@ -38,7 +38,7 @@ view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
 #' @return A \code{\link{view_object}} with status or an error message.
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @export
-views_open <- function(token, trigger_id, view){
+views_open <- function(token, trigger_id, view, return_response = F){
 
   assertthat::assert_that('slack.view.object' %in% class(view))
   assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) 'slack.block.element' %in% class(x)))), msg = 'blocks must be of class slack.block.element')
@@ -46,6 +46,8 @@ views_open <- function(token, trigger_id, view){
   body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap())
  
   response <- httr::POST('https://slack.com/api/views.open', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  
+  if(return_response) return(response)
   
   body <- httr::content(response)
   
