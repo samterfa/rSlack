@@ -2,7 +2,7 @@
 % Please edit documentation in R/views.R
 \name{views_open}
 \alias{views_open}
-\title{Open a View}
+\title{Open a View for a User}
 \usage{
 views_open(token, trigger_id, view, return_response = F)
 }
@@ -11,13 +11,13 @@ views_open(token, trigger_id, view, return_response = F)
 
 \item{trigger_id}{Exchange a trigger to post to the user.}
 
-\item{view}{A \code{\link{view_object}}. See \url{https://api.slack.com/reference/surfaces/views} for more details.}
+\item{view}{A \code{\link{view_object}}.}
 }
 \value{
 A \code{\link{view_object}} with status or an error message.
 }
 \description{
-Open a view for a user.
+Open a modal with a user by exchanging a trigger_id received from another interaction. See the modals documentation to learn how to obtain triggers from interactive components.
 }
 \seealso{
 \url{https://api.slack.com/methods/views.open}
