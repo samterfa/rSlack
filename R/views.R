@@ -32,13 +32,13 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
 }
 
 
-#' Open a View
+#' Open a View for a User
 #' 
-#' Open a view for a user.
+#' Open a modal with a user by exchanging a trigger_id received from another interaction. See the modals documentation to learn how to obtain triggers from interactive components.
 #' 
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
-#' @param view A \code{\link{view_object}}. See \url{https://api.slack.com/reference/surfaces/views} for more details.
+#' @param view A \code{\link{view_object}}.
 #' @return A \code{\link{view_object}} with status or an error message.
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @export
@@ -50,6 +50,71 @@ views_open <- function(token, trigger_id, view, return_response = F){
   body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap()) %>% purrr::compact()
   
   response <- httr::POST('https://slack.com/api/views.open', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  
+  if(return_response) return(response)
+  
+  body <- httr::content(response)
+  
+  if(!body$ok){
+    stop(body$error)
+  }
+  
+  body
+}
+
+
+#' Update an Existing View
+#' 
+#' Update a view by passing a new view definition object along with the view_id returned in views.open or the external_id. See the modals documentation to learn more about updating views and avoiding race conditions with the hash argument.
+#' 
+#' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
+#' @param view A \code{\link{view_object}}.
+#' @param external_id A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either view_id or external_id is required.
+#' @param hash A string that represents view state to protect against possible race conditions.
+#' @view_id A unique identifier of the view to be updated. Either view_id or external_id is required.
+#' @return A Success Response with the Updated payload.
+#' @seealso https://api.slack.com/methods/views.update
+#' @export
+views_update <- function(token, view, external_id = NULL, hash = NULL, view_id = NULL, return_response = F){
+  
+  assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
+  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')
+  assertthat::assert_that(!is.null(external_id) | !is.null(view_id))
+  
+  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap()) %>% purrr::compact()
+  
+  response <- httr::POST('https://slack.com/api/views.update', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  
+  if(return_response) return(response)
+  
+  body <- httr::content(response)
+  
+  if(!body$ok){
+    stop(body$error)
+  }
+  
+  body
+}
+
+
+#' Push a View
+#' 
+#' Push a new view onto the existing view stack by passing a view object and a valid trigger_id generated from an interaction within the existing modal. The pushed view is added to the top of the stack, so the user will go back to the previous view after they complete or cancel the pushed view. After a modal is opened, the app is limited to pushing 2 additional views. Read the modals documentation to learn more about the lifecycle and intricacies of views.
+#'
+#' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
+#' @param trigger_id Exchange a trigger to post to the user.
+#' @param view A \code{\link{view_object}}.
+#' @return If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.
+#' @seealso \url{https://api.slack.com/methods/views.push}
+#' @export
+views.push <- function(token, trigger_id, view){
+  
+  assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
+  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')
+  
+  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap()) %>% purrr::compact()
+  
+  response <- httr::POST('https://slack.com/api/views.push', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   
   if(return_response) return(response)
   
