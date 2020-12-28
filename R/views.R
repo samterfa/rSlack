@@ -16,10 +16,14 @@
 #' @return A View Object
 #' @seealso \url{https://api.slack.com/reference/surfaces/views}
 #' @export
-view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = NULL, submit = NULL, private_metadata = NULL, callback_id = NULL, clear_on_close = NULL, notify_on_close = NULL, external_id = NULL){
+view_object <- function(type, title, blocks, close = NULL, submit = NULL, private_metadata = NULL, callback_id = NULL, clear_on_close = NULL, notify_on_close = NULL, external_id = NULL){
   
-  assertthat::assert_that(type %in% c('modal', 'home'), 
-                          'slack.text.object' %in% class(title))
+  if(is.character(title)) title <- text_object(type = 'plain_text', text = title)
+  if(is.character(close)) close <- text_object(type = 'plain_text', text = close)
+  if(is.character(title)) submit <- text_object(type = 'plain_text', text = submit)
+  
+  assertthat::assert_that(type %in% c('modal', 'home'), msg = 'type must be one of modal or home')
+  assertthat::assert_that(inherits(title, 'slack.text.object'), msg = 'title must be of type slack.text.object')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.view.object')
@@ -40,12 +44,11 @@ view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
 #' @export
 views_open <- function(token, trigger_id, view, return_response = F){
 
-  assertthat::assert_that('slack.view.object' %in% class(view))
-  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) 'slack.block.object' %in% class(x)))), msg = 'blocks must be of class slack.block.object')
+  assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
+  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')
   
   body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap()) %>% purrr::compact()
-  print(body)
- 
+  
   response <- httr::POST('https://slack.com/api/views.open', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   
   if(return_response) return(response)
