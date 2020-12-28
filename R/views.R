@@ -21,7 +21,7 @@ view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
   assertthat::assert_that(type %in% c('modal', 'home'), 
                           'slack.text.object' %in% class(title))
   
-  obj <- as.list(environment())
+  obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.view.object')
   
   obj
@@ -41,9 +41,10 @@ view_object <- function(type = c('modal', 'home')[[1]], title, blocks, close = N
 views_open <- function(token, trigger_id, view, return_response = F){
 
   assertthat::assert_that('slack.view.object' %in% class(view))
-  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) 'slack.block.element' %in% class(x)))), msg = 'blocks must be of class slack.block.element')
+  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) 'slack.block.object' %in% class(x)))), msg = 'blocks must be of class slack.block.object')
   
-  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap())
+  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap()) %>% purrr::compact()
+  print(body)
  
   response <- httr::POST('https://slack.com/api/views.open', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   

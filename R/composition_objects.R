@@ -14,7 +14,7 @@ text_object <- function(type, text, emoji = NULL, verbatim = NULL){
   
   assertthat::assert_that(type %in% c('plain_text', 'mrkdwn'))
   
-  obj <- as.list(environment())
+  obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.text.object')
   
   obj
