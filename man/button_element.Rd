@@ -10,8 +10,7 @@ button_element(
   url = NULL,
   value = NULL,
   style = NULL,
-  confirm = NULL,
-  type = "button"
+  confirm = NULL
 )
 }
 \arguments{
@@ -23,11 +22,9 @@ button_element(
 
 \item{value}{The value to send along with the interaction payload. Maximum length for this field is 2000 characters.}
 
-\item{style}{Decorates buttons with alternative visual color schemes. Use this option with restraint.primary gives buttons a green outline and text, ideal for affirmation or confirmation actions. primary should only be used for one button within a set. danger gives buttons a red outline and text, and should be used when the action is destructive. Use danger even more sparingly than primary. If you don't include this field, the default button style will be used.}
+\item{style}{Decorates buttons with alternative visual color schemes. Use this option with restraint. primary gives buttons a green outline and text, ideal for affirmation or confirmation actions. primary should only be used for one button within a set. danger gives buttons a red outline and text, and should be used when the action is destructive. Use danger even more sparingly than primary. If you don't include this field, the default button style will be used.}
 
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog after the button is clicked.}
-
-\item{type}{The type of element. In this case type is always button.}
 }
 \value{
 A button element

@@ -5,7 +5,7 @@
 \title{View Object}
 \usage{
 view_object(
-  type = c("modal", "home")[[1]],
+  type,
   title,
   blocks,
   close = NULL,

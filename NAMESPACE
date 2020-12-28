@@ -2,7 +2,11 @@
 
 export(actions_block)
 export(button_element)
+export(checkbox_element)
 export(confirm_object)
+export(context_block)
+export(option_group)
+export(option_object)
 export(text_object)
 export(view_object)
 export(views_open)

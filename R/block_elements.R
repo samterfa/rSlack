@@ -52,6 +52,3 @@ checkbox_element <- function(action_id, options, initial_options = NULL, confirm
   
   obj
 }
-  
-  
-  
