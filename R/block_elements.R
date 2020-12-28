@@ -37,7 +37,8 @@ button_element <- function(text, action_id = NULL, url = NULL, value = NULL, sty
 #' @param options A list of \code{\link{option_object}}s. A maximum of 10 options are allowed.
 #' @param initial_options A list of \code{\link{option_object}}s that exactly matches one or more of the options within options. These options will be selected when the checkbox group initially loads.
 #' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears after clicking one of the checkboxes in this element.
-#' 
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#checkboxes}
+#' @export
 checkbox_element <- function(action_id, options, initial_options = NULL, confirm = NULL){
   
   type <- 'checkboxes'

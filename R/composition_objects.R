@@ -63,6 +63,7 @@ confirm_object <- function(title, text, confirm, deny, style = NULL){
 #' @param description A plain_text only text object that defines a line of descriptive text shown below the text field beside the radio button. Maximum length for the text object within this field is 75 characters.
 #' @param url A URL to load in the user's browser when the option is clicked. The url attribute is only available in overflow menus. Maximum length for this field is 3000 characters. If you're using url, you'll still receive an interaction payload and will need to send an acknowledgement response.
 #' @seealso https://api.slack.com/reference/block-kit/composition-objects#option
+#' @export
 option_object <- function(text, value, description = NULL, url = NULL){
   
   if(is.character(text)) text <- text_object(type = 'plain_text', text = text)
@@ -82,6 +83,7 @@ option_object <- function(text, value, description = NULL, url = NULL){
 #' @param label A plain_text only \code{\link{text_object}} that defines the label shown above this group of options. Maximum length for the text in this field is 75 characters.
 #' @param options A list of \code{\link{option_objects}} that belong to this specific group. Maximum of 100 items.
 #' @seealso https://api.slack.com/reference/block-kit/composition-objects#option_group
+#' @export
 option_group <- function(label, options){
   
   if(is.character(label)) label <- text_object(type = 'plain_text', text = label)
