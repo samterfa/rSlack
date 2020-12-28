@@ -45,7 +45,7 @@ views_open <- function(token, trigger_id, view){
   
   body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap())
  
-  response <- httr::POST('https://slack.com/api/views.open', body = body, encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  response <- httr::POST('https://slack.com/api/views.open', body = body %>% jsonlite::toJSON(auto_unbox = T), encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
   
   body <- httr::content(response)
   
