@@ -13,7 +13,7 @@
 #' @export
 verify_request <- function(request_timestamp, request_signature, request_body_raw, signing_secret, version = 'v0'){
   
-  sig <- paste0(version,
+  sig <- paste0(version, '=',
                 paste(version,
                       request_timestamp,
                       request_body_raw %>% rawToChar(),
