@@ -71,7 +71,7 @@ views_open <- function(token, trigger_id, view, return_response = F){
 #' @param view A \code{\link{view_object}}.
 #' @param external_id A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either view_id or external_id is required.
 #' @param hash A string that represents view state to protect against possible race conditions.
-#' @view_id A unique identifier of the view to be updated. Either view_id or external_id is required.
+#' @param view_id A unique identifier of the view to be updated. Either view_id or external_id is required.
 #' @return A Success Response with the Updated payload.
 #' @seealso https://api.slack.com/methods/views.update
 #' @export

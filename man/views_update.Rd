@@ -26,7 +26,7 @@ views_update(
 A Success Response with the Updated payload.
 }
 \description{
-Update a view by passing a new view definition object along with the view_id returned in views.open or the external_id. See the modals documentation to learn more about updating views and avoiding race conditions with the hash argument.
+Update a view by passing a new view definition object along with the view_id returned in views.open or the external_id. See the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn more about updating views and avoiding race conditions with the hash argument.
 }
 \seealso{
 https://api.slack.com/methods/views.update

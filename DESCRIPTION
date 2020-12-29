@@ -18,4 +18,5 @@ Imports:
     jsonlite,
     stringr,
     dplyr,
-    assertthat
+    assertthat,
+    magrittr

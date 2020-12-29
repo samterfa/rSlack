@@ -17,7 +17,7 @@ views.push(token, trigger_id, view)
 If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.
 }
 \description{
-Push a new view onto the existing view stack by passing a view object and a valid trigger_id generated from an interaction within the existing modal. The pushed view is added to the top of the stack, so the user will go back to the previous view after they complete or cancel the pushed view. After a modal is opened, the app is limited to pushing 2 additional views. Read the modals documentation to learn more about the lifecycle and intricacies of views.
+Push a new view onto the existing view stack by passing a view object and a valid trigger_id generated from an interaction within the existing modal. The pushed view is added to the top of the stack, so the user will go back to the previous view after they complete or cancel the pushed view. After a modal is opened, the app is limited to pushing 2 additional views. Read the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn more about the lifecycle and intricacies of views.
 }
 \seealso{
 \url{https://api.slack.com/methods/views.push}

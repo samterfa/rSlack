@@ -17,7 +17,7 @@ text_object <- function(type, text, emoji = NULL, verbatim = NULL){
   assertthat::assert_that(is.null(verbatim) || is.logical(verbatim), msg = "verbatim must be NULL or logical")
   
   obj <- as.list(environment()) %>% purrr::compact()
-  class(obj) <- append(class(obj), 'slack.text.object')
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.text.object'))
   
   obj
 }
@@ -48,7 +48,7 @@ confirm_object <- function(title, text, confirm, deny, style = NULL){
   assertthat::assert_that(is.null(style) || style %in% c('danger', 'primary'), msg = "style must be NULL or one of danger or primary")
   
   obj <- as.list(environment()) %>% purrr::compact()
-  class(obj) <- append(class(obj), 'slack.confirm.object')
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.confirm.object'))
   
   obj
 }
@@ -71,7 +71,7 @@ option_object <- function(text, value, description = NULL, url = NULL){
   assertthat::assert_that(inherits(text, 'slack.text.object'), msg = "text must be of class slack.text.object")
   
   obj <- as.list(environment()) %>% purrr::compact()
-  class(obj) <- append(class(obj), 'slack.option.object')
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.option.object'))
   
   obj
 }
@@ -108,7 +108,7 @@ option_group <- function(label, options){
   assertthat::assert_that(inherits(label, 'slack.text.object'), msg = "label must be of class slack.text.object")
   
   obj <- as.list(environment()) %>% purrr::compact()
-  class(obj) <- append(class(obj), 'slack.option_group.object')
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.option_group.object'))
   
   obj <- list(option_groups = obj)
   

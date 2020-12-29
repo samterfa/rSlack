@@ -17,7 +17,7 @@ views_open(token, trigger_id, view, return_response = F)
 A \code{\link{view_object}} with status or an error message.
 }
 \description{
-Open a modal with a user by exchanging a trigger_id received from another interaction. See the modals documentation to learn how to obtain triggers from interactive components.
+Open a modal with a user by exchanging a trigger_id received from another interaction. See the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn how to obtain triggers from interactive components.
 }
 \seealso{
 \url{https://api.slack.com/methods/views.open}
