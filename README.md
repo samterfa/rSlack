@@ -1,4 +1,4 @@
-# rSlack
+# slackme
 
 ![](https://img.shields.io/badge/lifecycle-developing-red)
 
