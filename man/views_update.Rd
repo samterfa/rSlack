@@ -21,6 +21,8 @@ views_update(
 \item{external_id}{A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either view_id or external_id is required.}
 
 \item{hash}{A string that represents view state to protect against possible race conditions.}
+
+\item{view_id}{A unique identifier of the view to be updated. Either view_id or external_id is required.}
 }
 \value{
 A Success Response with the Updated payload.
