@@ -1,5 +1,5 @@
-Package: rSlack
-Title: Consume the Slack Web API
+Package: slackme
+Title: Create Slack Apps
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Sam",
