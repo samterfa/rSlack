@@ -31,7 +31,7 @@ context_block <- function(elements, block_id = NULL){
   
   type <- 'contexts'
   
-  assertthat::assert_that(all(unlist(lapply(elements, function(x) inherits(x, 'slack.block.image') | inherits(x, 'slack.text.object')))), msg = 'elements must be created with image_element() or a text_object()')
+  assertthat::assert_that(all(unlist(lapply(elements, function(x) inherits(x, 'slack.image.element') | inherits(x, 'slack.text.object')))), msg = 'elements must be created with image_element() or a text_object()')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.block.object')
