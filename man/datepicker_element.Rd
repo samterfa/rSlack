@@ -21,7 +21,7 @@ datepicker_element(
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears after a date is selected.}
 }
 \description{
-An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity.
+An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity. Works with block types: Section Actions Input
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/block-elements#datepicker}

@@ -1,7 +1,7 @@
 
 #' Button Element
 #' 
-#' An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow.
+#' An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. Works with block types: Section Actions
 #' 
 #' @param text A \code{\link{text_object}} that defines the button's text. Can only be of type: plain_text. Maximum length for the text in this field is 75 characters.
 #' @param action_id An identifier for this action. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
@@ -31,7 +31,7 @@ button_element <- function(text, action_id = NULL, url = NULL, value = NULL, sty
 
 #' Checkbox Group
 #' 
-#' A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages.
+#' A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages. Works with block types: Section Actions Input
 #' 
 #' @param action_id An identifier for the action triggered when the checkbox group is changed. You can use this when you receive an interaction payload to \href{https://api.slack.com/interactivity/handling#payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param options A list of \code{\link{option_object}}s. A maximum of 10 options are allowed.
@@ -56,7 +56,7 @@ checkbox_element <- function(action_id, options, initial_options = NULL, confirm
 
 #' Date Picker Element
 #' 
-#' An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity.
+#' An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity. Works with block types: Section Actions Input
 #' 
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param placeholder A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the datepicker. Maximum length for the text in this field is 150 characters.
@@ -79,4 +79,29 @@ datepicker_element <- function(action_id, placeholder = NULL, initial_date = NUL
   
   obj
 }
+
+
+#' Image Element
+#' 
+#' An element to insert an image as part of a larger block of content. If you want a block with only an image in it, you're looking for the image block. Works with block types: Section Context
+#' 
+#' @param image_url The URL of the image to be displayed.
+#' @param alt_text A plain-text summary of the image. This should not contain any markup.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#image}
+#' @export
+image_element <- function(image_url, alt_text){
+  
+  type <- 'image'
+  
+  if(is.character(alt_text)) alt_text <- text_object(type = 'plain_text', text = alt_text)
+  
+  assertthat::assert_that(inherits(alt_text, 'slack.text.object'))
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.image.element'))
+  
+  obj
+}
+
+
 

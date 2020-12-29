@@ -30,7 +30,7 @@ button_element(
 A button element
 }
 \description{
-An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow.
+An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. Works with block types: Section Actions
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/block-elements#button}
