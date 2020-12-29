@@ -68,12 +68,29 @@ option_object <- function(text, value, description = NULL, url = NULL){
   
   if(is.character(text)) text <- text_object(type = 'plain_text', text = text)
   
-  assertthat::assert_that(inherits(text, 'slack.text.object'), msg = "title must be of class slack.text.object")
+  assertthat::assert_that(inherits(text, 'slack.text.object'), msg = "text must be of class slack.text.object")
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.option.object')
   
   obj
+}
+
+#' Create List of Option Objects
+#'
+#' Helper functions for making lists of options quickly from a dataframe.
+#' 
+#' @param df Table-like object containing columns text and value, and optionally text_type, value, description, and url. See \code{\link{option_object}} documentation for details.
+#' @export
+option_object_list <- function(df){
+  
+  assertthat::assert_that(hasName(df, 'text') & hasName(df, 'value'), 'df must have columns text and value')
+  
+  if(hasName(df, 'text_type')){
+    purrr::pmap(df, list) %>% purrr::map(~ option_object(text = text_object(type = .x$text_type, text = .x$text), value = .x$value, description = .x$description, url = .x$url))
+  }else{
+    purrr::pmap(df, list) %>% purrr::map(~ option_object(text = .x$text, value = .x$value, description = .x$description, url = .x$url))
+  }
 }
 
 #' Options Group Object
