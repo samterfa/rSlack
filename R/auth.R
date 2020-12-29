@@ -5,17 +5,18 @@
 #' 
 #' @param request_timestamp The X-Slack-Request-Timestamp header on the HTTP request.
 #' @param request_signature The X-Slack-Signature header on the request.
+#' @param request_body_raw The raw request body from the request. Make sure that this request body contains no headers and is not deserialized in any way. Slack only uses the raw request payload.
 #' @param signing_secret Your app's \href{https://api.slack.com/authentication/verifying-requests-from-slack#signing_secrets_admin_page}{signing secret} available in the app admin panel under Basic Info.
 #' @param version The version number right now is always v0.
 #' @return TRUE upon successful verification, otherwise an error is thrown.
 #' @seealso \url{https://api.slack.com/authentication/verifying-requests-from-slack}
 #' @export
-verify_request <- function(request_timestamp, request_signature, signing_secret, version = 'v0'){
+verify_request <- function(request_timestamp, request_signature, request_body_raw, signing_secret, version = 'v0'){
   
   sig <- paste0(version,
                 paste(version,
                       request_timestamp,
-                      req$bodyRaw %>% rawToChar(),
+                      request_body_raw %>% rawToChar(),
                       sep = ':') %>%
                   digest::hmac(key = signing_secret,
                                object = .,

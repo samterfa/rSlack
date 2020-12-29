@@ -7,6 +7,7 @@
 verify_request(
   request_timestamp,
   request_signature,
+  request_body_raw,
   signing_secret,
   version = "v0"
 )
@@ -15,6 +16,8 @@ verify_request(
 \item{request_timestamp}{The X-Slack-Request-Timestamp header on the HTTP request.}
 
 \item{request_signature}{The X-Slack-Signature header on the request.}
+
+\item{request_body_raw}{The raw request body from the request. Make sure that this request body contains no headers and is not deserialized in any way. Slack only uses the raw request payload.}
 
 \item{signing_secret}{Your app's \href{https://api.slack.com/authentication/verifying-requests-from-slack#signing_secrets_admin_page}{signing secret} available in the app admin panel under Basic Info.}
 
