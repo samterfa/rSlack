@@ -29,7 +29,7 @@ actions_block <- function(elements, block_id = NULL){
 #' @export
 context_block <- function(elements, block_id = NULL){
   
-  type <- 'contexts'
+  type <- 'context'
   
   assertthat::assert_that(all(unlist(lapply(elements, function(x) inherits(x, 'slack.image.element') | inherits(x, 'slack.text.object')))), msg = 'elements must be created with image_element() or a text_object()')
   
