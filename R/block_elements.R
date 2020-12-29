@@ -1,7 +1,7 @@
 
 #' Button Element
 #' 
-#' An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. Works with block types: Section Actions
+#' An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions
 #' 
 #' @param text A \code{\link{text_object}} that defines the button's text. Can only be of type: plain_text. Maximum length for the text in this field is 75 characters.
 #' @param action_id An identifier for this action. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
@@ -31,7 +31,7 @@ button_element <- function(text, action_id = NULL, url = NULL, value = NULL, sty
 
 #' Checkbox Group
 #' 
-#' A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages. Works with block types: Section Actions Input
+#' A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
 #' 
 #' @param action_id An identifier for the action triggered when the checkbox group is changed. You can use this when you receive an interaction payload to \href{https://api.slack.com/interactivity/handling#payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param options A list of \code{\link{option_object}}s. A maximum of 10 options are allowed.
@@ -43,8 +43,8 @@ checkbox_element <- function(action_id, options, initial_options = NULL, confirm
   
   type <- 'checkboxes'
   
-  assertthat::assert_that(all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object()')
-  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object()')
+  assertthat::assert_that(all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
   
   obj <- as.list(environment()) %>% purrr::compact()
@@ -56,7 +56,7 @@ checkbox_element <- function(action_id, options, initial_options = NULL, confirm
 
 #' Date Picker Element
 #' 
-#' An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity. Works with block types: Section Actions Input
+#' An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
 #' 
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param placeholder A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the datepicker. Maximum length for the text in this field is 150 characters.
@@ -100,4 +100,80 @@ image_element <- function(image_url, alt_text){
 }
 
 
+#' Static Options Multi-Select Menu Element
+#' 
+#' This is the simplest form of select menu, with a static list of options passed in when defining the element. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' 
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param options A list of \code{\link{option_object}}s. Maximum number of options is 100. If option_groups is specified, this field should not be.
+#' @param option_groups A list of \code{\link{option_group}} objects. Maximum number of option groups is 100. If options is specified, this field should not be.
+#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @seealso https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+#' @export
+multi_static_select <- function(placeholder, action_id, options = NULL, option_groups = NULL, initial_options = NULL, confirm = NULL, max_selected_items = NULL){
+  
+  type <- 'multi_static_select'
+  
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(options) || all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(option_groups) || all(unlist(lapply(option_groups, function(x) inherits(x, 'slack.option_group.object')))), msg = 'option_groups must be created using option_group()')
+  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_static_select.element'))
+  
+  obj
+}
+
+#' External Data Source Multi-Select Menu Element
+#' 
+#' This menu will load its options from an external data source, allowing for a dynamic list of options. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' 
+#' @param 
+
+multi_external_select <- function(){
+  
+  type <- 'multi_external_select'
+}
+
+#' User List Multi-Select Menu Element
+#' 
+#' This multi-select menu will populate its options with a list of Slack users visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' 
+#' @param
+
+multi_users_select <- function(){
+  
+  type <- 'multi_users_select'
+}
+
+#' Conversations List Multi-Select Menu Element
+#' 
+#' This multi-select menu will populate its options with a list of public and private channels, DMs, and MPIMs visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' 
+#' @param
+
+multi_conversations_select <- function(){
+  
+  type <- 'multi_conversations_select'
+}
+
+
+#' Public Channels List Multi-Select Menu Element
+#' 
+#' This multi-select menu will populate its options with a list of public channels visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' 
+#' @param
+
+multi_channels_select <- function(){
+  
+  type <- 'multi_channels_select'
+}
 

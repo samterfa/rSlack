@@ -115,5 +115,3 @@ option_group <- function(label, options){
   obj
 }
 
-
-
