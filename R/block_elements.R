@@ -1,5 +1,5 @@
 
-#' Create a Button Element
+#' Button Element
 #' 
 #' An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow.
 #' 
@@ -29,7 +29,7 @@ button_element <- function(text, action_id = NULL, url = NULL, value = NULL, sty
 }
 
 
-#' Create a Checkbox Group
+#' Checkbox Group
 #' 
 #' A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages.
 #' 
@@ -52,3 +52,29 @@ checkbox_element <- function(action_id, options, initial_options = NULL, confirm
   
   obj
 }
+
+
+#' Date Picker Element
+#' 
+#' An element which lets users easily select a date from a calendar style UI. To use interactive components like this, you will need to make some changes to prepare your app. Read our guide to enabling interactivity.
+#' 
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param placeholder A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the datepicker. Maximum length for the text in this field is 150 characters.
+#' @param initial_date The initial date that is selected when the element is loaded. This should be in the format YYYY-MM-DD.
+#' @param confirm	A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears after a date is selected.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#datepicker}
+#' @export
+datepicker_element <- function(action_id, placeholder = NULL, initial_date = NULL, confirm = NULL){
+  
+  type <- 'datepicker'
+  
+  assertthat::assert_that(all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object()')
+  assertthat::assert_that(is.null(initial_date) || grepl('^....-..-..$', initial_date), msg = 'initial_date must be of the form YYYY-MM-DD')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.datepicker.element'))
+  
+  obj
+}
+
