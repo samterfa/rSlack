@@ -2,7 +2,7 @@
 % Please edit documentation in R/block_elements.R
 \name{checkbox_element}
 \alias{checkbox_element}
-\title{Create a Checkbox Group}
+\title{Checkbox Group}
 \usage{
 checkbox_element(action_id, options, initial_options = NULL, confirm = NULL)
 }

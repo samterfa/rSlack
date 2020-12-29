@@ -2,7 +2,7 @@
 % Please edit documentation in R/block_elements.R
 \name{button_element}
 \alias{button_element}
-\title{Create a Button Element}
+\title{Button Element}
 \usage{
 button_element(
   text,

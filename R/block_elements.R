@@ -68,7 +68,10 @@ datepicker_element <- function(action_id, placeholder = NULL, initial_date = NUL
   
   type <- 'datepicker'
   
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
   assertthat::assert_that(all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object()')
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(initial_date) || grepl('^....-..-..$', initial_date), msg = 'initial_date must be of the form YYYY-MM-DD')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
   
