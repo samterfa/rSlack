@@ -34,7 +34,7 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
 
 #' Open a View for a User
 #' 
-#' Open a modal with a user by exchanging a trigger_id received from another interaction. See the modals documentation to learn how to obtain triggers from interactive components.
+#' Open a modal with a user by exchanging a trigger_id received from another interaction. See the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn how to obtain triggers from interactive components.
 #' 
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
@@ -65,7 +65,7 @@ views_open <- function(token, trigger_id, view, return_response = F){
 
 #' Update an Existing View
 #' 
-#' Update a view by passing a new view definition object along with the view_id returned in views.open or the external_id. See the modals documentation to learn more about updating views and avoiding race conditions with the hash argument.
+#' Update a view by passing a new view definition object along with the view_id returned in views.open or the external_id. See the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn more about updating views and avoiding race conditions with the hash argument.
 #' 
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param view A \code{\link{view_object}}.
@@ -99,7 +99,7 @@ views_update <- function(token, view, external_id = NULL, hash = NULL, view_id =
 
 #' Push a View
 #' 
-#' Push a new view onto the existing view stack by passing a view object and a valid trigger_id generated from an interaction within the existing modal. The pushed view is added to the top of the stack, so the user will go back to the previous view after they complete or cancel the pushed view. After a modal is opened, the app is limited to pushing 2 additional views. Read the modals documentation to learn more about the lifecycle and intricacies of views.
+#' Push a new view onto the existing view stack by passing a view object and a valid trigger_id generated from an interaction within the existing modal. The pushed view is added to the top of the stack, so the user will go back to the previous view after they complete or cancel the pushed view. After a modal is opened, the app is limited to pushing 2 additional views. Read the \href{https://api.slack.com/surfaces/modals}{modals documentation} to learn more about the lifecycle and intricacies of views.
 #'
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
