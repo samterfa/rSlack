@@ -93,8 +93,6 @@ image_element <- function(image_url, alt_text){
   
   type <- 'image'
   
-  assertthat::assert_that(inherits(alt_text, 'slack.text.object'))
-  
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.image.element'))
   
