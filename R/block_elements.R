@@ -93,8 +93,6 @@ image_element <- function(image_url, alt_text){
   
   type <- 'image'
   
-  if(is.character(alt_text)) alt_text <- text_object(type = 'plain_text', text = alt_text)
-  
   assertthat::assert_that(inherits(alt_text, 'slack.text.object'))
   
   obj <- as.list(environment()) %>% purrr::compact()
