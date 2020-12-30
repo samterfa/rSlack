@@ -394,7 +394,6 @@ external_select_menu <- function(placeholder, action_id, min_query_length = NULL
   assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
   assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.external_select.element'))
