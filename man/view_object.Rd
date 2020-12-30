@@ -46,4 +46,10 @@ Views are app-customized visual areas within modals and Home tabs.
 }
 \seealso{
 \url{https://api.slack.com/reference/surfaces/views}
+
+Other Views: 
+\code{\link{views.push}()},
+\code{\link{views_open}()},
+\code{\link{views_update}()}
 }
+\concept{Views}

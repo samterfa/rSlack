@@ -16,4 +16,18 @@ An element to insert an image as part of a larger block of content. If you want 
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/block-elements#image}
+
+Other Elements: 
+\code{\link{button_element}()},
+\code{\link{channels_multi_select_menu}()},
+\code{\link{checkbox_element}()},
+\code{\link{conversations_multi_select_menu}()},
+\code{\link{datepicker_element}()},
+\code{\link{external_multi_select_menu}()},
+\code{\link{overflow_menu_element}()},
+\code{\link{plain_text_input_element}()},
+\code{\link{radio_button_group_element}()},
+\code{\link{static_multi_select_menu}()},
+\code{\link{users_multi_select_menu}()}
 }
+\concept{Elements}

@@ -21,4 +21,10 @@ Open a modal with a user by exchanging a trigger_id received from another intera
 }
 \seealso{
 \url{https://api.slack.com/methods/views.open}
+
+Other Views: 
+\code{\link{view_object}()},
+\code{\link{views.push}()},
+\code{\link{views_update}()}
 }
+\concept{Views}

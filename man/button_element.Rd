@@ -16,7 +16,7 @@ button_element(
 \arguments{
 \item{text}{A \code{\link{text_object}} that defines the button's text. Can only be of type: plain_text. Maximum length for the text in this field is 75 characters.}
 
-\item{action_id}{An identifier for this action. You can use this when you receive an interaction payload to identify the source of the action. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.}
+\item{action_id}{An identifier for the action triggered when the checkbox group is changed. You can use this when you receive an interaction payload to \href{https://api.slack.com/interactivity/handling#payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.}
 
 \item{url}{A URL to load in the user's browser when the button is clicked. Maximum length for this field is 3000 characters. If you're using url, you'll still receive an \href{https://api.slack.com/interactivity/handling#payloads}{interaction payload} and will need to send an \href{https://api.slack.com/interactivity/handling#acknowledgment_response}{acknowledgment response}.}
 
@@ -30,8 +30,22 @@ button_element(
 A button element
 }
 \description{
-An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. Works with block types: Section Actions
+An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/block-elements#button}
+
+Other Elements: 
+\code{\link{channels_multi_select_menu}()},
+\code{\link{checkbox_element}()},
+\code{\link{conversations_multi_select_menu}()},
+\code{\link{datepicker_element}()},
+\code{\link{external_multi_select_menu}()},
+\code{\link{image_element}()},
+\code{\link{overflow_menu_element}()},
+\code{\link{plain_text_input_element}()},
+\code{\link{radio_button_group_element}()},
+\code{\link{static_multi_select_menu}()},
+\code{\link{users_multi_select_menu}()}
 }
+\concept{Elements}

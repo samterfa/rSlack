@@ -15,6 +15,7 @@
 #' @param external_id A custom identifier that must be unique for all views on a per-team basis. Used for Modals Home tabs.
 #' @return A View Object
 #' @seealso \url{https://api.slack.com/reference/surfaces/views}
+#' @family Views
 #' @export
 view_object <- function(type, title, blocks, close = NULL, submit = NULL, private_metadata = NULL, callback_id = NULL, clear_on_close = NULL, notify_on_close = NULL, external_id = NULL){
   
@@ -41,6 +42,7 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
 #' @param view A \code{\link{view_object}}.
 #' @return A \code{\link{view_object}} with status or an error message.
 #' @seealso \url{https://api.slack.com/methods/views.open}
+#' @family Views
 #' @export
 views_open <- function(token, trigger_id, view, return_response = F){
 
@@ -74,6 +76,7 @@ views_open <- function(token, trigger_id, view, return_response = F){
 #' @param view_id A unique identifier of the view to be updated. Either view_id or external_id is required.
 #' @return A Success Response with the Updated payload.
 #' @seealso https://api.slack.com/methods/views.update
+#' @family Views
 #' @export
 views_update <- function(token, view, external_id = NULL, hash = NULL, view_id = NULL, return_response = F){
   
@@ -106,6 +109,7 @@ views_update <- function(token, view, external_id = NULL, hash = NULL, view_id =
 #' @param view A \code{\link{view_object}}.
 #' @return If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.
 #' @seealso \url{https://api.slack.com/methods/views.push}
+#' @family Views
 #' @export
 views.push <- function(token, trigger_id, view){
   

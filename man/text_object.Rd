@@ -23,4 +23,12 @@ An object containing some text, formatted either as plain_text or using mrkdwn, 
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/composition-objects#text}
+
+Other Composition: 
+\code{\link{confirm_object}()},
+\code{\link{conversation_list_filter}()},
+\code{\link{dispaction_action_configuration}()},
+\code{\link{option_group}()},
+\code{\link{option_object}()}
 }
+\concept{Composition}

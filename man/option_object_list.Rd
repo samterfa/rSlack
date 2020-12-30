@@ -12,3 +12,4 @@ option_object_list(df)
 \description{
 Helper functions for making lists of options quickly from a dataframe.
 }
+\concept{Helpers}

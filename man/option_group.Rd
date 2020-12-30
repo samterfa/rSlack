@@ -16,4 +16,12 @@ Provides a way to group options in a select menu or multi-select menu.
 }
 \seealso{
 https://api.slack.com/reference/block-kit/composition-objects#option_group
+
+Other Composition: 
+\code{\link{confirm_object}()},
+\code{\link{conversation_list_filter}()},
+\code{\link{dispaction_action_configuration}()},
+\code{\link{option_object}()},
+\code{\link{text_object}()}
 }
+\concept{Composition}

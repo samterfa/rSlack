@@ -32,4 +32,10 @@ Update a view by passing a new view definition object along with the view_id ret
 }
 \seealso{
 https://api.slack.com/methods/views.update
+
+Other Views: 
+\code{\link{view_object}()},
+\code{\link{views.push}()},
+\code{\link{views_open}()}
 }
+\concept{Views}

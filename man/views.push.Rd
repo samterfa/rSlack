@@ -21,4 +21,10 @@ Push a new view onto the existing view stack by passing a view object and a vali
 }
 \seealso{
 \url{https://api.slack.com/methods/views.push}
+
+Other Views: 
+\code{\link{view_object}()},
+\code{\link{views_open}()},
+\code{\link{views_update}()}
 }
+\concept{Views}

@@ -25,4 +25,12 @@ An object that defines a dialog that provides a confirmation step to any interac
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/composition-objects#confirm}
+
+Other Composition: 
+\code{\link{conversation_list_filter}()},
+\code{\link{dispaction_action_configuration}()},
+\code{\link{option_group}()},
+\code{\link{option_object}()},
+\code{\link{text_object}()}
 }
+\concept{Composition}

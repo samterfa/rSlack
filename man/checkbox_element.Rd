@@ -16,8 +16,22 @@ checkbox_element(action_id, options, initial_options = NULL, confirm = NULL)
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears after clicking one of the checkboxes in this element.}
 }
 \description{
-A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages. Works with block types: Section Actions Input
+A checkbox group that allows a user to choose multiple items from a list of possible options. Checkboxes are only supported in the following app surfaces: Home tabs, Modals, and Messages. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
 }
 \seealso{
 \url{https://api.slack.com/reference/block-kit/block-elements#checkboxes}
+
+Other Elements: 
+\code{\link{button_element}()},
+\code{\link{channels_multi_select_menu}()},
+\code{\link{conversations_multi_select_menu}()},
+\code{\link{datepicker_element}()},
+\code{\link{external_multi_select_menu}()},
+\code{\link{image_element}()},
+\code{\link{overflow_menu_element}()},
+\code{\link{plain_text_input_element}()},
+\code{\link{radio_button_group_element}()},
+\code{\link{static_multi_select_menu}()},
+\code{\link{users_multi_select_menu}()}
 }
+\concept{Elements}

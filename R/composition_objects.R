@@ -9,6 +9,7 @@
 #' @param verbatim When set to false (as is default) URLs will be auto-converted into links, conversation names will be link-ified, and certain mentions will be automatically parsed. Using a value of true will skip any preprocessing of this nature, although you can still include manual parsing strings. This field is only usable when type is mrkdwn.
 #' @return A Slack Text Object
 #' @seealso \url{https://api.slack.com/reference/block-kit/composition-objects#text}
+#' @family Composition
 #' @export
 text_object <- function(type, text, emoji = NULL, verbatim = NULL){
   
@@ -33,6 +34,7 @@ text_object <- function(type, text, emoji = NULL, verbatim = NULL){
 #' @param style Defines the color scheme applied to the confirm button. A value of danger will display the button with a red background on desktop, or red text on mobile. A value of primary will display the button with a green background on desktop, or blue text on mobile. If this field is not provided, the default value will be primary.
 #' @return A Slack Confirmation Object
 #' @seealso \url{https://api.slack.com/reference/block-kit/composition-objects#confirm}
+#' @family Composition
 #' @export
 confirm_object <- function(title, text, confirm, deny, style = NULL){
   
@@ -63,6 +65,7 @@ confirm_object <- function(title, text, confirm, deny, style = NULL){
 #' @param description A plain_text only text object that defines a line of descriptive text shown below the text field beside the radio button. Maximum length for the text object within this field is 75 characters.
 #' @param url A URL to load in the user's browser when the option is clicked. The url attribute is only available in overflow menus. Maximum length for this field is 3000 characters. If you're using url, you'll still receive an interaction payload and will need to send an acknowledgement response.
 #' @seealso https://api.slack.com/reference/block-kit/composition-objects#option
+#' @family Composition
 #' @export
 option_object <- function(text, value, description = NULL, url = NULL){
   
@@ -81,6 +84,7 @@ option_object <- function(text, value, description = NULL, url = NULL){
 #' Helper functions for making lists of options quickly from a dataframe.
 #' 
 #' @param df Table-like object containing columns text and value, and optionally text_type, value, description, and url. See \code{\link{option_object}} documentation for details.
+#' @family Helpers
 #' @export
 option_object_list <- function(df){
   
@@ -100,6 +104,7 @@ option_object_list <- function(df){
 #' @param label A plain_text only \code{\link{text_object}} that defines the label shown above this group of options. Maximum length for the text in this field is 75 characters.
 #' @param options A list of \code{\link{option_objects}} that belong to this specific group. Maximum of 100 items.
 #' @seealso https://api.slack.com/reference/block-kit/composition-objects#option_group
+#' @family Composition
 #' @export
 option_group <- function(label, options){
   
@@ -114,4 +119,54 @@ option_group <- function(label, options){
   
   obj
 }
+
+
+#' Dispatch Action Configuration
+#' 
+#' Determines when a \code{\link{plain_text_input_element}} will return a block_actions \href{https://api.slack.com/reference/interaction-payloads/block-actions}{interaction payload}.
+#' 
+#' @param trigger_actions_on A list of interaction types that you would like to receive a \href{https://api.slack.com/reference/interaction-payloads/block-actions}{block_actions payload} for. Should be one or both of:
+#' \itemize{
+#' \item{on_enter_pressed - payload is dispatched when user presses the enter key while the input is in focus. Hint text will appear underneath the input explaining to the user to press enter to submit.}
+#' \item{on_character_entered - payload is dispatched when a character is entered (or removed) in the input.}
+#' }
+#' @seealso \url{https://api.slack.com/reference/block-kit/composition-objects#dispatch_action_config}
+#' @family Composition
+#' @export
+dispaction_action_configuration <- function(trigger_actions_on){
+  
+  assertthat::assert_that(all(trigger_actions_on %in% c('on_enter_pressed', 'on_character_entered')), msg = 'trigger_actions_on must be one or both of on_enter_pressed and on_character_entered')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.option.object'))
+  
+  obj <- list(dispatch_action_config = obj)
+  
+  obj
+}
+
+
+#' Filter Object for Conversation Lists
+#'
+#' Provides a way to filter the list of options in a \code{\link{conversations_select_menu}} or \code{\link{conversations_multi_select_menu}}. Please note that while none of the fields above are individually required, you must supply at least one of these fields.
+#' 
+#' @param include Indicates which type of conversations should be included in the list. When this field is provided, any conversations that do not match will be excluded. You should provide an array of strings from the following options: im, mpim, private, and public. The array cannot be empty.
+#' @param exclude_external_shared_channels Indicates whether to exclude external \href{https://api.slack.com/enterprise/shared-channels}{shared channels} from conversation lists. Defaults to false.
+#' @param exclude_bot_users Indicates whether to exclude bot users from conversation lists. Defaults to false.
+#' @seealso \url{https://api.slack.com/reference/block-kit/composition-objects#filter_conversations}
+#' @family Composition
+#' @export
+conversation_list_filter <- function(include = NULL, exclude_external_shared_channels = NULL, exclude_bot_users = NULL){
+  
+  assertthat::assert_that(!is.null(include) | !is.null(exclude_external_shared_channels) | !is.null(exclude_bot_users))
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.composition.object', 'slack.conversation_filter.object'))
+  
+  obj <- list(filter = obj)
+  
+  obj
+}
+
+
 
