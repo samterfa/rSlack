@@ -95,7 +95,7 @@ header_block <- function(text, block_id = NULL){
   
   type <- 'header'
   
-  if(is.character(text)) text <- text_object(type = 'plain_text', text = text)
+  if(!inherits(text, 'slack.text.object')) text <- text_object(type = 'plain_text', text = text)
   
   assertthat::assert_that(inherits(text, 'slack.text.object'))
   
@@ -121,9 +121,9 @@ image_block <- function(image_url, alt_text, title = NULL, block_id = NULL){
   
   type <- 'image'
   
-  if(is.character(title)) title <- text_object(type = 'plain_text', text = title)
+  if(!inherits(title, 'slack.text.object')) title <- text_object(type = 'plain_text', text = title)
   
-  assertthat::assert_that(inherits(title, 'slack.text.object'))
+  assertthat::assert_that(is.null(title) || inherits(title, 'slack.text.object'))
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.object', 'slack.image.block'))
@@ -149,8 +149,8 @@ input_block <- function(label, element, dispatch_action = NULL, block_id = NULL,
   
   type <- 'input'
   
-  if(is.character(label)) label <- text_object(type = 'plain_text', text = label)
-  if(is.character(hint)) hint <- text_object(type = 'plain_text', text = hint)
+  if(!inherits(label, 'slack.text.object')) label <- text_object(type = 'plain_text', text = label)
+  if(!inherits(hint, 'slack.text.object')) hint <- text_object(type = 'plain_text', text = hint)
   
   assertthat::assert_that(inherits(label, 'slack.text.object'))
   assertthat::assert_that(inherits(element, 'slack.block.element'))
@@ -181,7 +181,7 @@ section_block <- function(text = NULL, block_id = NULL, fields = NULL, accessory
   
   type <- 'section'
   
-  if(is.character(text)) text <- text_object(type = 'plain_text', text = text)
+  if(!inherits(text, 'slack.text.object')) text <- text_object(type = 'plain_text', text = text)
   
   assertthat::assert_that(is.null(text) || inherits(text, 'slack.text.object'))
   assertthat::assert_that(is.null(fields) || all(unlist(lapply(fields, function(x) inherits(x, 'slack.text.object')))), msg = 'fields must be created with text_object()')
