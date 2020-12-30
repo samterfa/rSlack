@@ -248,3 +248,58 @@ multi_channels_select <- function(placeholder, action_id, initial_channels = NUL
   obj
 }
 
+
+
+#' Overflow Menu Element
+#' 
+#' This is like a cross between a button and a select menu - when a user clicks on this overflow button, they will be presented with a list of options to choose from. Unlike the select menu, there is no typeahead field, and the button always appears with an ellipsis ("…") rather than customisable text. As such, it is usually used if you want a more compact layout than a select menu, or to supply a list of less visually important actions after a row of buttons. You can also specify simple URL links as overflow menu options, instead of actions. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions
+#' 
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param options A list of \code{\link{option_object}}s to display in the menu. Maximum number of options is 5, minimum is 2.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#overflow}
+#' @export
+overflow_menu_element <- function(action_id, options, confirm = NULL){
+  
+  type <- 'overflow'
+  
+  assertthat::assert_that(all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.overflow_menu.element'))
+  
+  obj
+}
+
+#' Plain-Text Input Element
+#' 
+#' A plain-text input, similar to the HTML <input> tag, creates a field where a user can enter freeform data. It can appear as a single-line field or a larger textarea using the multiline flag. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Input. Plain-text input elements are supported in the following \href{https://api.slack.com/surfaces}{app surfaces}: Home tabs Modals
+#' 
+#' @param action_id An identifier for the input value when the parent modal is submitted. You can use this when you receive a view_submission payload to \href{https://api.slack.com/surfaces/modals/using#handling-submissions}{identify the value of the input element}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param initial_value The initial value in the plain-text input when it is loaded.
+#' @param multiline	Indicates whether the input will be a single line (false) or a larger textarea (true). Defaults to false.
+#' @param min_Length The minimum length of input that the user must provide. If the user provides less, they will receive an error. Maximum value is 3000.
+#' @param max_length The maximum length of input that the user can provide. If the user provides more, they will receive an error.
+#' @param dispatch_action_config A \code{\link{dispatch_action_configuration_object}} that determines when during text input the element returns a \href{https://api.slack.com/reference/interaction-payloads/block-actions}{block_actions payload}.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#input}
+#' @export
+plain_text_input_element <- function(action_id, placeholder = NULL, multiline = NULL, min_length = NULL, max_length = NULL, dispatch_action_config = NULL){
+  
+  type <- 'plain_text_input'
+  
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(is.null(placeholder) || inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(multiline) || is.logical(multiline))
+  assertthat::assert_that(is.null(min_length) || (min_length > 0 & min_length <= 3000))
+  assertthat::assert_that(is.null(dispatch_action_config) || inherits(dispatch_action_config, 'slack.dispatch_action_configuration.object'))
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.plain_text_input.element'))
+  
+  obj 
+}
+
+
