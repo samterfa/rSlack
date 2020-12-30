@@ -71,7 +71,7 @@ datepicker_element <- function(action_id, placeholder = NULL, initial_date = NUL
   
   type <- 'datepicker'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(initial_date) || grepl('^....-..-..$', initial_date), msg = 'initial_date must be of the form YYYY-MM-DD')
@@ -112,17 +112,17 @@ image_element <- function(image_url, alt_text){
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param options A list of \code{\link{option_object}}s. Maximum number of options is 100. If option_groups is specified, this field should not be.
 #' @param option_groups A list of \code{\link{option_group}} objects. Maximum number of option groups is 100. If options is specified, this field should not be.
-#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.
+#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or option_groups. These options will be selected when the menu initially loads.
 #' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
 #' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
-#' @seealso https://api.slack.com/reference/block-kit/block-elements#static_multi_select_menu
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#static_multi_select_menu}
 #' @family Elements
 #' @export
 static_multi_select_menu <- function(placeholder, action_id, options = NULL, option_groups = NULL, initial_options = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_static_select'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(options) || all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object() or option_object_list()')
@@ -139,7 +139,7 @@ static_multi_select_menu <- function(placeholder, action_id, options = NULL, opt
 
 #' External Data Source Multi-Select Menu Element
 #' 
-#' This menu will load its options from an external data source, allowing for a dynamic list of options. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
+#' This menu will load its options from an external data source, allowing for a dynamic list of options. Each time a select menu of this type is opened or the user starts typing in the typeahead field, we'll send a request to your specified URL. Your app should return an HTTP 200 OK response, along with an application/json post body with an object containing either an \code{\link{option_object}} list, or an \code{\link{option_groups}} list. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
 #' 
 #' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
@@ -154,7 +154,7 @@ external_multi_select_menu <- function(placeholder, action_id, min_query_length 
   
   type <- 'multi_external_select'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
@@ -184,7 +184,7 @@ users_multi_select_menu <- function(placeholder, action_id, initial_users = NULL
   
   type <- 'multi_users_select'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
@@ -214,7 +214,7 @@ conversations_multi_select_menu <- function(placeholder, action_id, initial_conv
   
   type <- 'multi_conversations_select'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(default_to_current_conversation) || is.logical(default_to_current_conversation))
@@ -245,7 +245,7 @@ channels_multi_select_menu <- function(placeholder, action_id, initial_channels 
   
   type <- 'multi_channels_select'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
@@ -299,7 +299,7 @@ plain_text_input_element <- function(action_id, placeholder = NULL, multiline = 
   
   type <- 'plain_text_input'
   
-  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(is.null(placeholder) || inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(multiline) || is.logical(multiline))
@@ -337,6 +337,188 @@ radio_button_group_element <- function(action_id, options, initial_option = NULL
   
   obj 
 }
+
+
+
+#' Static Options Select Menu Element
+#' 
+#' This is the simplest form of select menu, with a static list of options passed in when defining the element. A select menu, just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param placeholder A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param options A list of \code{\link{option_object}}s. Maximum number of options is 100. If option_groups is specified, this field should not be.
+#' @param option_groups A list of \code{\link{option_group}} objects. Maximum number of option groups is 100. If options is specified, this field should not be.
+#' @param initial_option A single \code{link{option_object}}s that exactly match one or more of the options within option_objects or option_groups. These options will be selected when the menu initially loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears after a menu item is selected.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#static_select}
+#' @family Elements
+#' @export
+static_select_menu <- function(placeholder, action_id, options = NULL, option_groups = NULL, initial_option = NULL, confirm = NULL){
+  
+  type <- 'static_select'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(options) || all(unlist(lapply(options, function(x) inherits(x, 'slack.option.object')))), msg = 'options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(option_groups) || all(unlist(lapply(option_groups, function(x) inherits(x, 'slack.option_group.object')))), msg = 'option_groups must be created using option_group()')
+  assertthat::assert_that(is.null(initial_option) || inherits(initial_option, 'slack.option.object'), msg = 'initial_option must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(options) | is.null(option_groups), msg = 'Only one of options or option_groups should be specified.')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.static_select.element'))
+  
+  obj
+}
+
+#' External Data Source Select Menu Element
+#' 
+#' This menu will load its options from an external data source, allowing for a dynamic list of options. Each time a select menu of this type is opened or the user starts typing in the typeahead field, we'll send a request to your specified URL. Your app should return an HTTP 200 OK response, along with an application/json post body with an object containing either an \code{\link{option_object}} list, or an \code{\link{option_groups}} list. A select menu, just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param min_query_length When the typeahead field is used, a request will be sent on every character change. If you prefer fewer requests or more fully ideated queries, use the min_query_length attribute to tell Slack the fewest number of typed characters required before dispatch. The default value is 3.
+#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#external_select}
+#' @family Elements
+#' @export
+external_select_menu <- function(placeholder, action_id, min_query_length = NULL, initial_options = NULL, confirm = NULL, max_selected_items = NULL){
+  
+  type <- 'external_select'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
+  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.external_select.element'))
+  
+  obj
+}
+
+#' User List Select Menu Element
+#' 
+#' This select menu will populate its options with a list of Slack users visible to the current user in the active workspace. A select menu, just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_user The user ID of any valid user to be pre-selected when the menu loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#users_multi_select}
+#' @family Elements
+#' @export
+users_select_menu <- function(placeholder, action_id, initial_user = NULL, confirm = NULL){
+  
+  type <- 'users_select'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.users_select.element'))
+  
+  obj
+}
+
+#' Conversations List Select Menu Element
+#' 
+#' This select menu will populate its options with a list of public and private channels, DMs, and MPIMs visible to the current user in the active workspace. A select menu, just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_conversation A list of one or more IDs of any valid conversations to be pre-selected when the menu loads. If default_to_current_conversation is also supplied, initial_conversation will take precedence.
+#' @param default_to_current_conversation Pre-populates the select menu with the conversation that the user was viewing when they opened the modal, if available. Default is false.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
+#' @param response_url_enabled This field only works with menus in \code{\link{input_block}}s in \href{https://api.slack.com/surfaces/modals}{modals}. When set to true, the \href{https://api.slack.com/reference/interaction-payloads/views#view_submission}{view_submission payload} from the menu's parent view will contain a response_url. This response_url can be used for \href{https://api.slack.com/interactivity/handling#message_responses}{message responses}. The target conversation for the message will be determined by the value of this select menu.
+#' @param filter A \code{\link{filter_object}} that reduces the list of available conversations using the specified criteria.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#conversation_select}
+#' @family Elements
+#' @export
+conversations_select_menu <- function(placeholder, action_id, initial_conversations = NULL, default_to_current_conversation = NULL, confirm = NULL, response_url_enabled = NULL, filter = NULL){
+  
+  type <- 'conversations_select'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(default_to_current_conversation) || is.logical(default_to_current_conversation), msg = 'default_to_current_conversation must be logical')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(response_url_enabled) || is.logical(response_url_enabled), msg = 'response_url_enabled must be logical')
+  assertthat::assert_that(is.null(filter) || inherits(filter, 'slack.filter.object'))
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.conversations_select.element'))
+  
+  obj
+}
+
+
+#' Public Channels List Select Menu Element
+#' 
+#' This multi-select menu will populate its options with a list of public channels visible to the current user in the active workspace. A select menu, just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_channel The ID of any valid public channel to be pre-selected when the menu loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
+#' @param response_url_enabled This field only works with menus in \code{\link{input_block}}s in \href{https://api.slack.com/surfaces/modals}{modals}. When set to true, the \href{https://api.slack.com/reference/interaction-payloads/views#view_submission}{view_submission payload} from the menu's parent view will contain a response_url. This response_url can be used for \href{https://api.slack.com/interactivity/handling#message_responses}{message responses}. The target channel for the message will be determined by the value of this select menu.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#channel_select}
+#' @family Elements
+#' @export
+channels_select_menu <- function(placeholder, action_id, initial_channel = NULL, confirm = NULL){
+  
+  type <- 'channels_select'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.channels_select.element'))
+  
+  obj
+}
+
+
+
+#' Time Picker Element
+#' 
+#' An element which allows selection of a time of day. On desktop clients, this time picker will take the form of a dropdown list with free-text entry for precise choices. On mobile clients, the time picker will use native time picker UIs. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input
+#' 
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the timepicker Maximum length for the text in this field is 150 characters.
+#' @param initial_time The initial time that is selected when the element is loaded. This should be in the format HH:mm, where HH is the 24-hour format of an hour (00 to 23) and mm is minutes with leading zeros (00 to 59), for example 22:25 for 10:25pm.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#timepicker}
+#' @family Elements
+#' @export
+timepicker_element <- function(action_id, placeholder = NULL, initial_time = NULL, confirm = NULL){
+  
+  type <- 'timepicker'
+  
+  if(!inherits(placeholder, 'slack.text.object')) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(initial_time) || initial_time %>% grepl(pattern = '^\\d\\d:\\d\\d$'), msg = 'intial_time must be of the form HH:mm')
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.timepicker.element'))
+  
+  obj
+}
+
+
+
+
 
 
 

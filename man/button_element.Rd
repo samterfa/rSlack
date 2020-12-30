@@ -37,15 +37,21 @@ An interactive component that inserts a button. The button can be a trigger for 
 
 Other Elements: 
 \code{\link{channels_multi_select_menu}()},
+\code{\link{channels_select_menu}()},
 \code{\link{checkbox_element}()},
 \code{\link{conversations_multi_select_menu}()},
+\code{\link{conversations_select_menu}()},
 \code{\link{datepicker_element}()},
 \code{\link{external_multi_select_menu}()},
+\code{\link{external_select_menu}()},
 \code{\link{image_element}()},
 \code{\link{overflow_menu_element}()},
 \code{\link{plain_text_input_element}()},
 \code{\link{radio_button_group_element}()},
 \code{\link{static_multi_select_menu}()},
-\code{\link{users_multi_select_menu}()}
+\code{\link{static_select_menu}()},
+\code{\link{timepicker_element}()},
+\code{\link{users_multi_select_menu}()},
+\code{\link{users_select_menu}()}
 }
 \concept{Elements}
