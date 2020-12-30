@@ -124,7 +124,7 @@ multi_static_select <- function(placeholder, action_id, options = NULL, option_g
   assertthat::assert_that(is.null(option_groups) || all(unlist(lapply(option_groups, function(x) inherits(x, 'slack.option_group.object')))), msg = 'option_groups must be created using option_group()')
   assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_static_select.element'))
@@ -144,16 +144,17 @@ multi_static_select <- function(placeholder, action_id, options = NULL, option_g
 #' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#external_multi_select}
 #' @export
-
 multi_external_select <- function(placeholder, action_id, min_query_length = NULL, initial_options = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_external_select'
+  
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
   assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_external_select.element'))
@@ -167,7 +168,7 @@ multi_external_select <- function(placeholder, action_id, min_query_length = NUL
 #' 
 #' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
-#' @param initial_users A list of one or more IDs of any valid conversations to be pre-selected when the menu loads. If default_to_current_conversation is also supplied, initial_conversations will be ignored.
+#' @param initial_users A list of user IDs of any valid users to be pre-selected when the menu loads.
 #' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
 #' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#users_multi_select}
@@ -176,9 +177,11 @@ multi_users_select <- function(placeholder, action_id, initial_users = NULL, con
   
   type <- 'multi_users_select'
   
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_users_select.element'))
@@ -199,15 +202,16 @@ multi_users_select <- function(placeholder, action_id, initial_users = NULL, con
 #' @param filter A \code{\link{filter_object}} that reduces the list of available conversations using the specified criteria.
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select}
 #' @export
-
 multi_conversations_select <- function(placeholder, action_id, initial_conversations = NULL, default_to_current_conversation = NULL, confirm = NULL, max_selected_items = NULL, filter = NULL){
   
   type <- 'multi_conversations_select'
   
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(default_to_current_conversation) || is.logical(default_to_current_conversation))
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   assertthat::assert_that(is.null(filter) || inherits(filter, 'slack.filter.object'))
   
   obj <- as.list(environment()) %>% purrr::compact()
@@ -228,14 +232,15 @@ multi_conversations_select <- function(placeholder, action_id, initial_conversat
 #' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#channel_multi_select}
 #' @export
-
 multi_channels_select <- function(placeholder, action_id, initial_channels = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_channels_select'
   
+  if(is.character(placeholder)) placeholder <- text_object(type = 'plain_text', text = placeholder)
+  
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
-  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 0, msg = 'max_selected_items must be numeric and greater than 0')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_channels_select.element'))
