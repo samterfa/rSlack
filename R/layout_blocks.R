@@ -186,7 +186,7 @@ section_block <- function(text = NULL, block_id = NULL, fields = NULL, accessory
   assertthat::assert_that(is.null(text) || inherits(text, 'slack.text.object'))
   assertthat::assert_that(is.null(fields) || all(unlist(lapply(fields, function(x) inherits(x, 'slack.text.object')))), msg = 'fields must be created with text_object()')
   assertthat::assert_that(!is.null(text) || !is.null(fields), msg = 'text or fields must be defined')
-  assertthat::assert_that(all(unlist(lapply(accessory, function(x) inherits(x, 'slack.block.element')))), msg = 'Every accessory must be a block element.')
+  assertthat::assert_that(is.null(accessory) || inherits(accessory, 'slack.block.element'), msg = 'An accessory must be a block element.')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.block.object', 'slack.section.block'))

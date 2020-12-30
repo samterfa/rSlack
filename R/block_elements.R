@@ -379,12 +379,12 @@ static_select_menu <- function(placeholder, action_id, options = NULL, option_gr
 #' @param placeholder 	A plain_text only \code{\link{text_object}} that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
 #' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
 #' @param min_query_length When the typeahead field is used, a request will be sent on every character change. If you prefer fewer requests or more fully ideated queries, use the min_query_length attribute to tell Slack the fewest number of typed characters required before dispatch. The default value is 3.
-#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.
+#' @param initial_option A single \code{link{option_object}} that exactly match one or more of the options within options or option_groups. This option will be selected when the menu initially loads.
 #' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.
 #' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#external_select}
 #' @family Elements
 #' @export
-external_select_menu <- function(placeholder, action_id, min_query_length = NULL, initial_options = NULL, confirm = NULL){
+external_select_menu <- function(placeholder, action_id, min_query_length = NULL, initial_option = NULL, confirm = NULL){
   
   type <- 'external_select'
   
@@ -392,7 +392,7 @@ external_select_menu <- function(placeholder, action_id, min_query_length = NULL
   
   assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
   assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
-  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(initial_option) || inherits(initial_option, 'slack.option.object'), msg = 'initial_option must be created using option_object() or option_object_list()')
   assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
   
   obj <- as.list(environment()) %>% purrr::compact()

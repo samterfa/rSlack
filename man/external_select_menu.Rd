@@ -8,7 +8,7 @@ external_select_menu(
   placeholder,
   action_id,
   min_query_length = NULL,
-  initial_options = NULL,
+  initial_option = NULL,
   confirm = NULL
 )
 }
@@ -19,7 +19,7 @@ external_select_menu(
 
 \item{min_query_length}{When the typeahead field is used, a request will be sent on every character change. If you prefer fewer requests or more fully ideated queries, use the min_query_length attribute to tell Slack the fewest number of typed characters required before dispatch. The default value is 3.}
 
-\item{initial_options}{A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.}
+\item{initial_option}{A single \code{link{option_object}} that exactly match one or more of the options within options or option_groups. This option will be selected when the menu initially loads.}
 
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.}
 }
