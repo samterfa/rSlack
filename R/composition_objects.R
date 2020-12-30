@@ -88,7 +88,7 @@ option_object <- function(text, value, description = NULL, url = NULL){
 #' @export
 option_object_list <- function(df){
   
-  assertthat::assert_that(hasName(df, 'text') & hasName(df, 'value'), 'df must have columns text and value')
+  assertthat::assert_that(hasName(df, 'text') & hasName(df, 'value'), msg = 'df must have columns text and value')
   
   if(hasName(df, 'text_type')){
     purrr::pmap(df, list) %>% purrr::map(~ option_object(text = text_object(type = .x$text_type, text = .x$text), value = .x$value, description = .x$description, url = .x$url))
@@ -158,7 +158,7 @@ dispaction_action_configuration <- function(trigger_actions_on){
 #' @export
 conversation_list_filter <- function(include = NULL, exclude_external_shared_channels = NULL, exclude_bot_users = NULL){
   
-  assertthat::assert_that(!is.null(include) | !is.null(exclude_external_shared_channels) | !is.null(exclude_bot_users))
+  assertthat::assert_that(!is.null(include) | !is.null(exclude_external_shared_channels) | !is.null(exclude_bot_users), msg = 'You must supply at least one of include, exclude_external_shared_channels, or exclude_bot_users.')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), c('slack.composition.object', 'slack.conversation_filter.object'))
