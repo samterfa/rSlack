@@ -136,33 +136,84 @@ multi_static_select <- function(placeholder, action_id, options = NULL, option_g
 #' 
 #' This menu will load its options from an external data source, allowing for a dynamic list of options. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
 #' 
-#' @param 
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param min_query_length When the typeahead field is used, a request will be sent on every character change. If you prefer fewer requests or more fully ideated queries, use the min_query_length attribute to tell Slack the fewest number of typed characters required before dispatch. The default value is 3.
+#' @param initial_options A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#external_multi_select}
+#' @export
 
-multi_external_select <- function(){
+multi_external_select <- function(placeholder, action_id, min_query_length = NULL, initial_options = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_external_select'
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(min_query_length) || min_query_length > 0)
+  assertthat::assert_that(is.null(initial_options) || all(unlist(lapply(initial_options, function(x) inherits(x, 'slack.option.object')))), msg = 'initial_options must be created using option_object() or option_object_list()')
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_external_select.element'))
+  
+  obj
 }
 
 #' User List Multi-Select Menu Element
 #' 
 #' This multi-select menu will populate its options with a list of Slack users visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
 #' 
-#' @param
-
-multi_users_select <- function(){
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_users A list of one or more IDs of any valid conversations to be pre-selected when the menu loads. If default_to_current_conversation is also supplied, initial_conversations will be ignored.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#users_multi_select}
+#' @export
+multi_users_select <- function(placeholder, action_id, initial_users = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_users_select'
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_users_select.element'))
+  
+  obj
 }
 
 #' Conversations List Multi-Select Menu Element
 #' 
 #' This multi-select menu will populate its options with a list of public and private channels, DMs, and MPIMs visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
 #' 
-#' @param
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_conversations A list of one or more IDs of any valid conversations to be pre-selected when the menu loads. If default_to_current_conversation is also supplied, initial_conversations will be ignored.
+#' @param default_to_current_conversation Pre-populates the select menu with the conversation that the user was viewing when they opened the modal, if available. Default is false.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @param filter A \code{\link{filter_object}} that reduces the list of available conversations using the specified criteria.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select}
+#' @export
 
-multi_conversations_select <- function(){
+multi_conversations_select <- function(placeholder, action_id, initial_conversations = NULL, default_to_current_conversation = NULL, confirm = NULL, max_selected_items = NULL, filter = NULL){
   
   type <- 'multi_conversations_select'
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(default_to_current_conversation) || is.logical(default_to_current_conversation))
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  assertthat::assert_that(is.null(filter) || inherits(filter, 'slack.filter.object'))
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_conversations_select.element'))
+  
+  obj
 }
 
 
@@ -170,10 +221,25 @@ multi_conversations_select <- function(){
 #' 
 #' This multi-select menu will populate its options with a list of public channels visible to the current user in the active workspace. A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Input
 #' 
-#' @param
+#' @param placeholder 	A plain_text only \code{\link{text_object}] that defines the placeholder text shown on the menu. Maximum length for the text in this field is 150 characters.
+#' @param action_id An identifier for the action triggered when a menu option is selected. You can use this when you receive an interaction payload to \href{https://api.slack.com/messaging/interactivity/enabling#understanding_payloads}{identify the source of the action}. Should be unique among all other action_ids in the containing block. Maximum length for this field is 255 characters.
+#' @param initial_channels A list of one or more IDs of any valid public channel to be pre-selected when the menu loads.
+#' @param confirm A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the multi-select choices are submitted.
+#' @param max_selected_items Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.
+#' @seealso \url{https://api.slack.com/reference/block-kit/block-elements#channel_multi_select}
+#' @export
 
-multi_channels_select <- function(){
+multi_channels_select <- function(placeholder, action_id, initial_channels = NULL, confirm = NULL, max_selected_items = NULL){
   
   type <- 'multi_channels_select'
+  
+  assertthat::assert_that(inherits(placeholder, 'slack.text.object'))
+  assertthat::assert_that(is.null(confirm) || inherits(confirm, 'slack.confirm.object'), msg = 'confirm must be created with confirm_object()')
+  assertthat::assert_that(is.null(max_selected_items) || max_selected_items > 1)
+  
+  obj <- as.list(environment()) %>% purrr::compact()
+  class(obj) <- append(class(obj), c('slack.block.element', 'slack.multi_channels_select.element'))
+  
+  obj
 }
 
