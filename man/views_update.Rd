@@ -35,7 +35,7 @@ https://api.slack.com/methods/views.update
 
 Other Views: 
 \code{\link{view_object}()},
-\code{\link{views.push}()},
-\code{\link{views_open}()}
+\code{\link{views_open}()},
+\code{\link{views_push}()}
 }
 \concept{Views}

@@ -9,8 +9,7 @@ external_select_menu(
   action_id,
   min_query_length = NULL,
   initial_options = NULL,
-  confirm = NULL,
-  max_selected_items = NULL
+  confirm = NULL
 )
 }
 \arguments{
@@ -23,8 +22,6 @@ external_select_menu(
 \item{initial_options}{A list of \code{link{option_object}}s that exactly match one or more of the options within options or \code{\link{option_group}}s. These options will be selected when the menu initially loads.}
 
 \item{confirm}{A \code{\link{confirm_object}} that defines an optional confirmation dialog that appears before the select choices are submitted.}
-
-\item{max_selected_items}{Specifies the maximum number of items that can be selected in the menu. Minimum number is 1.}
 }
 \description{
 This menu will load its options from an external data source, allowing for a dynamic list of options. Each time a select menu of this type is opened or the user starts typing in the typeahead field, we'll send a request to your specified URL. Your app should return an HTTP 200 OK response, along with an application/json post body with an object containing either an \code{\link{option_object}} list, or an \code{\link{option_groups}} list. A select menu, just as with a standard HTML \verb{<select>} tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list. To use interactive components, you will need to make some changes to prepare your app. Read our \href{https://api.slack.com/interactivity/handling}{guide to enabling interactivity}. Works with block types: Section Actions Input

@@ -4,7 +4,7 @@
 \alias{section_block}
 \title{Section Block}
 \usage{
-section_block()
+section_block(text = NULL, block_id = NULL, fields = NULL, accessory = NULL)
 }
 \arguments{
 \item{text}{The text for the block, in the form of a \code{\link{text_object}}. Maximum length for the text in this field is 3000 characters. This field is not required if a valid array of fields objects is provided instead.}

@@ -111,7 +111,7 @@ views_update <- function(token, view, external_id = NULL, hash = NULL, view_id =
 #' @seealso \url{https://api.slack.com/methods/views.push}
 #' @family Views
 #' @export
-views.push <- function(token, trigger_id, view){
+views_push <- function(token, trigger_id, view){
   
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')

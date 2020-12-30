@@ -24,7 +24,7 @@ Open a modal with a user by exchanging a trigger_id received from another intera
 
 Other Views: 
 \code{\link{view_object}()},
-\code{\link{views.push}()},
+\code{\link{views_push}()},
 \code{\link{views_update}()}
 }
 \concept{Views}

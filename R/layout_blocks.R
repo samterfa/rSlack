@@ -177,7 +177,7 @@ input_block <- function(label, element, dispatch_action = NULL, block_id = NULL,
 #' @seealso \url{https://api.slack.com/reference/block-kit/blocks#section}
 #' @family Blocks
 #' @export
-section_block <- function(){
+section_block <- function(text = NULL, block_id = NULL, fields = NULL, accessory = NULL){
   
   type <- 'section'
   
