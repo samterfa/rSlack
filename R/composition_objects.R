@@ -85,15 +85,16 @@ option_object <- function(text, value, description = NULL, url = NULL){
 #' 
 #' @param df Table-like object containing columns text and value, and optionally text_type, value, description, and url. See \code{\link{option_object}} documentation for details.
 #' @family Helpers
+#' @return A list of \code{\link{option_object}}s
 #' @export
 option_object_list <- function(df){
   
   assertthat::assert_that(hasName(df, 'text') & hasName(df, 'value'), msg = 'df must have columns text and value')
   
   if(hasName(df, 'text_type')){
-    purrr::pmap(df, list) %>% purrr::map(~ option_object(text = text_object(type = .x$text_type, text = .x$text), value = .x$value, description = .x$description, url = .x$url))
+    list(options = purrr::pmap(df, list) %>% purrr::map(~ option_object(text = text_object(type = .x$text_type, text = .x$text), value = .x$value, description = .x$description, url = .x$url)))
   }else{
-    purrr::pmap(df, list) %>% purrr::map(~ option_object(text = .x$text, value = .x$value, description = .x$description, url = .x$url))
+    list(options = purrr::pmap(df, list) %>% purrr::map(~ option_object(text = .x$text, value = .x$value, description = .x$description, url = .x$url)))
   }
 }
 

@@ -9,6 +9,9 @@ option_object_list(df)
 \arguments{
 \item{df}{Table-like object containing columns text and value, and optionally text_type, value, description, and url. See \code{\link{option_object}} documentation for details.}
 }
+\value{
+A list of \code{\link{option_object}}s
+}
 \description{
 Helper functions for making lists of options quickly from a dataframe.
 }
