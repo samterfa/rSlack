@@ -4,7 +4,7 @@
 \alias{views_push}
 \title{Push a View}
 \usage{
-views_push(token, trigger_id, view)
+views_push(token, trigger_id, view, return_response = F)
 }
 \arguments{
 \item{token}{Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.}
@@ -12,6 +12,8 @@ views_push(token, trigger_id, view)
 \item{trigger_id}{Exchange a trigger to post to the user.}
 
 \item{view}{A \code{\link{view_object}}.}
+
+\item{return_response}{Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)}
 }
 \value{
 If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.

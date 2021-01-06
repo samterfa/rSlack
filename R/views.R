@@ -40,6 +40,7 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
 #' @param view A \code{\link{view_object}}.
+#' @param return_response Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)
 #' @return A \code{\link{view_object}} with status or an error message.
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @family Views
@@ -74,6 +75,7 @@ views_open <- function(token, trigger_id, view, return_response = F){
 #' @param external_id A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either view_id or external_id is required.
 #' @param hash A string that represents view state to protect against possible race conditions.
 #' @param view_id A unique identifier of the view to be updated. Either view_id or external_id is required.
+#' @param return_response Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)
 #' @return A Success Response with the Updated payload.
 #' @seealso https://api.slack.com/methods/views.update
 #' @family Views
@@ -107,11 +109,12 @@ views_update <- function(token, view, external_id = NULL, hash = NULL, view_id =
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
 #' @param trigger_id Exchange a trigger to post to the user.
 #' @param view A \code{\link{view_object}}.
+#' @param return_response Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)
 #' @return If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.
 #' @seealso \url{https://api.slack.com/methods/views.push}
 #' @family Views
 #' @export
-views_push <- function(token, trigger_id, view){
+views_push <- function(token, trigger_id, view, return_response = F){
   
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')

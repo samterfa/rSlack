@@ -12,6 +12,8 @@ views_open(token, trigger_id, view, return_response = F)
 \item{trigger_id}{Exchange a trigger to post to the user.}
 
 \item{view}{A \code{\link{view_object}}.}
+
+\item{return_response}{Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)}
 }
 \value{
 A \code{\link{view_object}} with status or an error message.

@@ -23,6 +23,8 @@ views_update(
 \item{hash}{A string that represents view state to protect against possible race conditions.}
 
 \item{view_id}{A unique identifier of the view to be updated. Either view_id or external_id is required.}
+
+\item{return_response}{Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)}
 }
 \value{
 A Success Response with the Updated payload.
