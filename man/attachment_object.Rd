@@ -31,13 +31,13 @@ attachment_object(
 
 \item{author_name}{Small text used to display the author's name.}
 
-\item{blocks}{An array of @family{Blocks} in the same format as described in the \href{https://api.slack.com/block-kit/building}{building blocks guide}.}
+\item{blocks}{A list of @family{Blocks} in the same format as described in the \href{https://api.slack.com/block-kit/building}{building blocks guide}.}
 
 \item{color}{Changes the color of the border on the left side of this attachment from the default gray. Can either be one of good (green), warning (yellow), danger (red), or any hex color code (eg. #439FE0)}
 
 \item{fallback}{A plain text summary of the attachment used in clients that don't show formatted text (eg. IRC, mobile notifications).}
 
-\item{fields}{An array of field objects that get displayed in a table-like way (See the example above). For best results, include no more than 2-3 field objects.}
+\item{fields}{A list of field objects that get displayed in a table-like way (See the example above). For best results, include no more than 2-3 field objects.}
 
 \item{footer}{Some brief text to help contextualize and identify an attachment. Limited to 300 characters, and may be truncated further when displayed to users in environments with limited screen real estate.}
 
@@ -45,7 +45,7 @@ attachment_object(
 
 \item{image_url}{A valid URL to an image file that will be displayed at the bottom of the attachment. We support GIF, JPEG, PNG, and BMP formats.Large images will be resized to a maximum width of 360px or a maximum height of 500px, while still maintaining the original aspect ratio. Cannot be used with thumb_url.}
 
-\item{mrkdwn_in}{An array of field names that should be formatted by mrkdwn syntax.}
+\item{mrkdwn_in}{A list of field names that should be formatted by mrkdwn syntax.}
 
 \item{pretext}{Text that appears above the message attachment block. It can be formatted as plain text, or with mrkdwn by including it in the mrkdwn_in field.}
 
