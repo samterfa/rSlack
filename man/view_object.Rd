@@ -49,6 +49,7 @@ Views are app-customized visual areas within modals and Home tabs.
 
 Other Views: 
 \code{\link{views_open}()},
+\code{\link{views_publish}()},
 \code{\link{views_push}()},
 \code{\link{views_update}()}
 }

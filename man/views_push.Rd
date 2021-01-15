@@ -13,7 +13,7 @@ views_push(token, trigger_id, view, return_response = F)
 
 \item{view}{A \code{\link{view_object}}.}
 
-\item{return_response}{Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)}
+\item{return_response}{Whether or not to return the API call response as opposed to the response body. Defaults to FALSE (return response body)}
 }
 \value{
 If you pass a valid view object along with a valid trigger_id, you'll receive a success response with the view object that was pushed to the stack.
@@ -27,6 +27,7 @@ Push a new view onto the existing view stack by passing a view object and a vali
 Other Views: 
 \code{\link{view_object}()},
 \code{\link{views_open}()},
+\code{\link{views_publish}()},
 \code{\link{views_update}()}
 }
 \concept{Views}

@@ -24,7 +24,7 @@ views_update(
 
 \item{view_id}{A unique identifier of the view to be updated. Either view_id or external_id is required.}
 
-\item{return_response}{Whether or not to return the API call response as opposed to the reponse body. Defaults to FALSE (return response body)}
+\item{return_response}{Whether or not to return the API call response as opposed to the response body. Defaults to FALSE (return response body)}
 }
 \value{
 A Success Response with the Updated payload.
@@ -38,6 +38,7 @@ https://api.slack.com/methods/views.update
 Other Views: 
 \code{\link{view_object}()},
 \code{\link{views_open}()},
+\code{\link{views_publish}()},
 \code{\link{views_push}()}
 }
 \concept{Views}
