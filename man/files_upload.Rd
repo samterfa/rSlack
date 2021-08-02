@@ -5,7 +5,7 @@
 \title{Uploads or creates a file.}
 \usage{
 files_upload(
-  token,
+  token = Sys.getenv("SLACK_TOKEN"),
   channels = NULL,
   content = NULL,
   file = NULL,

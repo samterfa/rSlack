@@ -5,7 +5,7 @@
 \title{Lists all channels in a Slack team.}
 \usage{
 conversations_list(
-  token,
+  token = Sys.getenv("SLACK_TOKEN"),
   limit = 100,
   types = "public_channel,private_channel,mpim,im",
   return_response = F

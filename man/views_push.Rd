@@ -4,7 +4,12 @@
 \alias{views_push}
 \title{Push a View}
 \usage{
-views_push(token, trigger_id, view, return_response = F)
+views_push(
+  token = Sys.getenv("SLACK_TOKEN"),
+  trigger_id,
+  view,
+  return_response = F
+)
 }
 \arguments{
 \item{token}{Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.}

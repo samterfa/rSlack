@@ -5,7 +5,7 @@
 \title{Update an Existing View}
 \usage{
 views_update(
-  token,
+  token = Sys.getenv("SLACK_TOKEN"),
   view,
   external_id = NULL,
   hash = NULL,
