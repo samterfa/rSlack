@@ -16,7 +16,7 @@
 #' @seealso \url{https://api.slack.com/methods/files.upload}
 #' @family Files
 #' @export
-files_upload <- function(token, channels = NULL, content = NULL, file = NULL, filename = NULL, filetype = NULL, initial_comment = NULL, thread_ts = NULL, title = NULL, return_response = F){
+files_upload <- function(token = Sys.getenv("SLACK_TOKEN"), channels = NULL, content = NULL, file = NULL, filename = NULL, filetype = NULL, initial_comment = NULL, thread_ts = NULL, title = NULL, return_response = F){
   
   if(!is.null(file) && class(file) != 'form_file') file <- httr::upload_file(file)
   
