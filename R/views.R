@@ -46,7 +46,7 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
 #' @seealso \url{https://api.slack.com/methods/views.open}
 #' @family Views
 #' @export
-views_open <- function(token, trigger_id, view, return_response = F){
+views_open <- function(token = Sys.getenv("SLACK_TOKEN"), trigger_id, view, return_response = F){
 
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   
@@ -80,7 +80,7 @@ views_open <- function(token, trigger_id, view, return_response = F){
 #' @seealso https://api.slack.com/methods/views.update
 #' @family Views
 #' @export
-views_update <- function(token, view, external_id = NULL, hash = NULL, view_id = NULL, return_response = F){
+views_update <- function(token = Sys.getenv("SLACK_TOKEN"), view, external_id = NULL, hash = NULL, view_id = NULL, return_response = F){
   
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   assertthat::assert_that(!is.null(external_id) | !is.null(view_id))
@@ -113,7 +113,7 @@ views_update <- function(token, view, external_id = NULL, hash = NULL, view_id =
 #' @seealso \url{https://api.slack.com/methods/views.push}
 #' @family Views
 #' @export
-views_push <- function(token, trigger_id, view, return_response = F){
+views_push <- function(token = Sys.getenv("SLACK_TOKEN"), trigger_id, view, return_response = F){
   
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   
@@ -145,7 +145,7 @@ views_push <- function(token, trigger_id, view, return_response = F){
 #' @seealso \url{https://api.slack.com/methods/views.publish}
 #' @family Views
 #' @export
-views_publish <- function(token, user_id, view, hash = NULL, return_response = F){
+views_publish <- function(token = Sys.getenv("SLACK_TOKEN"), user_id, view, hash = NULL, return_response = F){
   
   assertthat::assert_that(inherits(view, 'slack.view.object'), msg = "view must be created using view_object()")
   

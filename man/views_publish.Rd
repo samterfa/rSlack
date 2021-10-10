@@ -4,7 +4,13 @@
 \alias{views_publish}
 \title{Publish a View}
 \usage{
-views_publish(token, user_id, view, hash = NULL, return_response = F)
+views_publish(
+  token = Sys.getenv("SLACK_TOKEN"),
+  user_id,
+  view,
+  hash = NULL,
+  return_response = F
+)
 }
 \arguments{
 \item{token}{Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.}
