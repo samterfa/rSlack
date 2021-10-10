@@ -25,7 +25,7 @@ view_object <- function(type, title, blocks, close = NULL, submit = NULL, privat
   
   assertthat::assert_that(type %in% c('modal', 'home'), msg = 'type must be one of modal or home')
   assertthat::assert_that(inherits(title, 'slack.text.object'), msg = 'title must be of type slack.text.object')
-  assertthat::assert_that(all(unlist(lapply(view$blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')
+  assertthat::assert_that(all(unlist(lapply(blocks, function(x) inherits(x, 'slack.block.object')))), msg = 'blocks must be of class slack.block.object')
   
   obj <- as.list(environment()) %>% purrr::compact()
   class(obj) <- append(class(obj), 'slack.view.object')
