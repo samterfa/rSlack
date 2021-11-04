@@ -22,7 +22,7 @@ files_upload <- function(token = Sys.getenv("SLACK_TOKEN"), channels = NULL, con
   
   body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap(), return_response = purrr::zap()) %>% purrr::compact()
  
-  response <- httr::POST('https://slack.com/api/files.upload', body = body, httr::content_type('multipart/form-data'), httr::add_headers(Authorization = glue::glue('Bearer {token}')), httr::timeout(10))
+  response <- httr::POST('https://slack.com/api/files.upload', body = body, httr::content_type('multipart/form-data'), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
  
   if(return_response) return(response)
   
