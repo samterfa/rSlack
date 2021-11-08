@@ -28,6 +28,36 @@ conversations_list <- function(token = Sys.getenv("SLACK_TOKEN"), limit = 100, t
   body
 }
 
+
+#' Opens or resumes a direct message or multi-person direct message.
+#'
+#' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
+#' @param channel Resume a conversation by supplying an im or mpim's ID. Or provide the users field instead.
+#' @param return_im Boolean, indicates you want the full IM channel definition in the response.
+#' @param users Comma separated lists of users. If only one user is included, this creates a 1:1 DM. The ordering of the users is preserved whenever a multi-person direct message is returned. Supply a channel when not supplying users.
+#' @section Details:
+#' This method supports application/json via HTTP POST. Present your token in your request's Authorization header. Learn more.
+#'
+#' @export
+conversations_open <- function(token = Sys.getenv("SLACK_TOKEN"), channel = NULL, return_im = NULL, users = NULL, return_response = F){
+  
+  body <- as.list(environment()) %>% purrr::list_modify(token = purrr::zap(), return_response = purrr::zap()) %>% purrr::compact()
+  
+  response <- httr::POST('https://slack.com/api/conversations.open', body = body, encode = 'json', httr::content_type_json(), httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  
+  if(return_response) return(response)
+  
+  body <- httr::content(response)
+  
+  if(!body$ok){
+    stop(body$error)
+  }
+  
+  body
+}
+
+
+
 #' Sends a message to a channel.
 #'
 #' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
