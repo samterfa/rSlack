@@ -28,6 +28,44 @@ conversations_list <- function(token = Sys.getenv("SLACK_TOKEN"), limit = 100, t
   body
 }
 
+#' Fetches a conversation's history of messages and events.
+#'
+#' @param token Authentication token bearing required scopes. Tokens should be passed as an HTTP Authorization header or alternatively, as a POST parameter.
+#' @param channel Conversation ID to fetch history for.
+#' @param cursor Paginate through collections of data by setting the cursor parameter to a next_cursor attribute returned by a previous request's response_metadata. Default value fetches the first "page" of the collection. See pagination for more detail.
+#' @param inclusive Include messages with latest or oldest timestamp in results only when either timestamp is specified. Default: 0
+#' @param latest End of time range of messages to include in results. Default is the current time.
+#' @param limit The maximum number of items to return. Fewer than the requested number of items may be returned, even if the end of the users list hasn't been reached. Default: 100
+#' @param oldest Start of time range of messages to include in results. Default: 0
+#' @param return_response Whether or not to return the API call response as opposed to the response body. Defaults to FALSE (return response body)
+#' 
+#' @section Details:
+#' Information about required scopes 
+#' This  Conversations API  method's required scopes depend on the type of channel-like object you're working with. To use the method, you'll need at least one of the  channels: ,  groups: ,  im:  or  mpim:  scopes corresponding to the conversation type you're working with.
+#' Present arguments as parameters in  application/x-www-form-urlencoded  querystring or POST body. This method does not currently accept  application/json .
+#'
+#' @seealso \url{https://api.slack.com/methods/conversations.history}
+#'
+#' @export
+conversations_history <- function(token = Sys.getenv("SLACK_TOKEN"), channel, cursor = NULL, inclusive = NULL, latest = NULL, limit = NULL, oldest = NULL, return_response = F){
+  
+  params <- as.list(environment())
+  
+  query <- params[!names(params) %in% c('token', 'return_response')]
+  
+  response <- httr::GET('https://slack.com/api/conversations.history', query = query, httr::add_headers(Authorization = glue::glue('Bearer {token}')))
+  
+  if(return_response) return(response)
+  
+  body <- httr::content(response)
+  
+  if(!body$ok){
+    stop(body$error)
+  }
+  
+  body
+}
+
 
 #' Opens or resumes a direct message or multi-person direct message.
 #'
