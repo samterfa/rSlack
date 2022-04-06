@@ -145,7 +145,7 @@ image_block <- function(image_url, alt_text, title = NULL, block_id = NULL){
 #' @seealso https://api.slack.com/reference/block-kit/blocks#input
 #' @family Blocks
 #' @export
-input_block <- function(label, element, dispatch_action = NULL, block_id = NULL, hint = NULL, option = NULL){
+input_block <- function(label, element, dispatch_action = NULL, block_id = NULL, hint = NULL, optional = NULL){
   
   type <- 'input'
   
