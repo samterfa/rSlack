@@ -150,11 +150,11 @@ input_block <- function(label, element, dispatch_action = NULL, block_id = NULL,
   type <- 'input'
   
   if(!inherits(label, 'slack.text.object')) label <- text_object(type = 'plain_text', text = label)
-  if(!inherits(hint, 'slack.text.object')) hint <- text_object(type = 'plain_text', text = hint)
+  if(!inherits(hint, 'slack.text.object') & !is.null(hint)) hint <- text_object(type = 'plain_text', text = hint)
   
   assertthat::assert_that(inherits(label, 'slack.text.object'))
   assertthat::assert_that(inherits(element, 'slack.block.element'))
-  assertthat::assert_that(inherits(hint, 'slack.text.object'))
+  assertthat::assert_that(is.null(hint) || inherits(hint, 'slack.text.object'))
   assertthat::assert_that(is.null(dispatch_action) || is.logical(dispatch_action))
   assertthat::assert_that(is.null(optional) || is.logical(optional))
   
